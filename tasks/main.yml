@@ -1,0 +1,13 @@
+---
+
+- name: Assert Docker is running
+  service: name=docker state=started
+
+- name: Pull Docker Continer
+  command: sudo docker pull {{kafka_manager_container}}:{{kafka_manager_version}}
+
+- name: Add Upstart file for Kafka Manager
+  template: src=upstart.js dest=/etc/init/kafka-manager.conf mode=0644
+
+- name: Enable service
+  service: name=kafka-manager enabled=true
