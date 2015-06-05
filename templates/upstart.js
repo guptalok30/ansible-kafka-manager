@@ -21,7 +21,9 @@ script
     --name ${UPSTART_JOB} \
     -h `cat /etc/hostname` \
     --restart="always" \
+    -p 9000:9000 \
     {{kafka_manager_container}}:{{kafka_manager_version}}
+
 end script
 
 pre-stop script
