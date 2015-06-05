@@ -9,5 +9,17 @@
 - name: Add Upstart file for Kafka Manager
   template: src=upstart.js dest=/etc/init/kafka-manager.conf mode=0644
 
+- name: Ensure dnsmasq binds to localhost IP
+  lineinfile: line="listen-address=127.0.0.1" dest=/etc/dnsmasq.conf
+
+- name: Ensure dnsmasq binds to docker bridge IP
+  lineinfile: line="listen-address=172.17.42.1" dest=/etc/dnsmasq.conf
+
+- name: Ensure dnsmasq binds to docker interface
+  lineinfile: line="interface=docker0" dest=/etc/dnsmasq.conf
+
+- name: Ensure dnsmasq binds to loopback interface
+  lineinfile: line="interface=lo" dest=/etc/dnsmasq.conf
+
 - name: Enable service
   service: name=kafka-manager enabled=true
